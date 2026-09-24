@@ -24,22 +24,26 @@ public static class ModifyBlock
     }
 
 
+    // Temp move to fix bug Commenting out for posterity but block needs to be consolidated for a bunch of things like off hands (torches and lanterns) and heimdall set.
+    // This would be more a balance and design choice so for the time being I just want this to work and will review all the blocking stuff so it funnels properly.
+    // -Leslie
+
     // base block strongest modifier. Modifies numeric first then stacks multipliers of skill,magic effects, etc.
     // Only when additive. multiplicative doesnt matter that much
-    [HarmonyPatch(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.GetBaseBlockPower), typeof(int))]
-    private static class ModifyParry_ItemDrop_ItemData_GetBaseBlockPower_Patch
-    {
-        private static void Postfix(ItemDrop.ItemData __instance, ref float __result)
-        {
-            if (!RunModifyBlockPatchs(__instance))
-            {
-                return;
-            }
+    //[HarmonyPatch(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.GetBaseBlockPower), typeof(int))]
+    //private static class ModifyParry_ItemDrop_ItemData_GetBaseBlockPower_Patch
+    //{
+    //    private static void Postfix(ItemDrop.ItemData __instance, ref float __result)
+    //    {
+    //        if (!RunModifyBlockPatchs(__instance))
+    //        {
+    //            return;
+    //        }
 
-            float modifiedValue = GetBlockPowerValue(Player.m_localPlayer, __instance, __result, ModifyParryWindow.IsParry());
-            __result = modifiedValue;
-        }
-    }
+    //        float modifiedValue = GetBlockPowerValue(Player.m_localPlayer, __instance, __result, ModifyParryWindow.IsParry());
+    //        __result = modifiedValue;
+    //    }
+    //} 
 
     /// <summary>
     /// Helper method to determine calculation for tooltip.

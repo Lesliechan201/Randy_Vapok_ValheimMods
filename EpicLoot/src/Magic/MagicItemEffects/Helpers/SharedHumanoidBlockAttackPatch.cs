@@ -1,5 +1,7 @@
 ﻿using EpicLoot.MagicItemEffects.Shards;
+using EpicLoot.MagicItemEffects;
 using HarmonyLib;
+
 
 namespace EpicLoot.src.Magic.MagicItemEffects.Helpers {
     // Single consolidated Harmony patch for Humanoid.BlockAttack. It replaces the ~7 and counting individual [HarmonyPatch]
@@ -58,6 +60,11 @@ namespace EpicLoot.src.Magic.MagicItemEffects.Helpers {
             BurdenedBlock.Apply(__instance, ref __result); 
             AnchoredBlock.Apply(__instance, ref __result);
             BloodBaseBlock.Apply(__instance, ref __result);
+
+            if (!ModifyBlock.RunModifyBlockPatchs(__instance)) return;
+
+            float modifiedValue = ModifyBlock.GetBlockPowerValue(Player.m_localPlayer, __instance, __result, ModifyParryWindow.IsParry());
+            __result = modifiedValue;
         }
     }
 
@@ -68,7 +75,7 @@ namespace EpicLoot.src.Magic.MagicItemEffects.Helpers {
 
     internal static class BlockPowerMultiplerPatch{
         [HarmonyPostfix]
-        private static void BlockPowerPatch(ref float __result) {
+        private static void BlockPowerPatch(ItemDrop.ItemData __instance, ref float __result) {
 
         }
     }
